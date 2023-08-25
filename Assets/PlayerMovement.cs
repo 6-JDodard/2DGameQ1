@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask jumpableGround;
     private float dirX = 0f;
 
+    private enum MovementState { idle, running, jumping, falling }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,26 +38,31 @@ public class PlayerMovement : MonoBehaviour
 
        }  
 
-        UpdateAnimationUpdate();
+        UpdateAnimationState();
     }
-    private void UpdateAnimationUpdate()
+    private void UpdateAnimationState()
     {
+      MovementState state;
+
         if (dirX > 0f)
        {
-          anim.SetBool("Running", true);
+          state = MovementState.running;
+
        }
        else if (dirX < 0f)
        {
-          anim.SetBool("Running", true);
+          state = MovementState.running;
        }
        else
        {
-          anim.SetBool("Running", false);
+          state = MovementState.running;
        }
 
-    }
+   }
     private bool isGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
+    
+    anim.SetInteger("state",)
 }
