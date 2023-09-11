@@ -8,10 +8,14 @@ public class ItemCollector : MonoBehaviour
     private int cherry = 0;
 
     [SerializeField] private Text cherryText;
+
+    [SerializeField] private AudioSource ItemCollectionSound;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if(collision.gameObject.CompareTag("Cherry"))
         {
+            ItemCollectionSound.Play();
             Destroy(collision.gameObject);
             cherry++;
             cherryText.text = "Cherries: " + cherry;
