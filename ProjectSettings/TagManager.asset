@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cherry
   - Trap
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: FurtherBackground
+    uniqueID: 3298361255
+    locked: 0
   - name: Background
     uniqueID: 2986930595
     locked: 0

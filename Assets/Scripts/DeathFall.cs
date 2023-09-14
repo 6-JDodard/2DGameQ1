@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class DeathFall : MonoBehaviour
 {
-  [SerializeField] private Play deathScript;
+  [SerializeField] private PlayerLife deathScript;
     void Update()
     {
-        if(transform.postiion.y < -10)
+        if(transform.position.y < -10)
+        {
+          deathScript.RestartLevel();
+        }
     }
 }
