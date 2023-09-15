@@ -77,6 +77,16 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
-    
+     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            
+            Destroy(collision.gameObject);
+        
+        }
+    }
+
    
 }
