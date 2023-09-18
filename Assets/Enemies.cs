@@ -26,7 +26,7 @@ public class Enemies : MonoBehaviour
         transform.Translate(directionTranslation);
         CheckForWalls();
     }
-
+   
     private void CheckForWalls()
     {
         Vector3 raycastingDirection = (IsGoingRight) ? Vector3.right : Vector3.left;
