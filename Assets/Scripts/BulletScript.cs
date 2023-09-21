@@ -7,6 +7,7 @@ public class BulletScript : MonoBehaviour
     private GameObject player;
     private Rigidbody2D rb;
     public float force;
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +17,9 @@ public class BulletScript : MonoBehaviour
 
       Vector3 direction = player.transform.position - transform.position;
       rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
+
+      //float rot = Mathf. Atan2(-direction.y, -direction.x) * Mathf. Rad2Deg;
+      //transform. rotation = Quaternion.Euler(0,0, rot + 90); 
     }
+ 
 }
