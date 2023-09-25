@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
+    private bool doubleJump;
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
@@ -34,12 +35,23 @@ public class PlayerMovement : MonoBehaviour
 
        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-       if(Input.GetButtonDown("Jump") && isGrounded())
-       {
+      if(Input.GetButtonDown("Jump") && isGrounded())
+      {
         jumpSound.Play();
         rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
+      }  
+      
+      if(isGrounded() && !Input.GetButtonDown("Jump"))
+      {
+        doubleJump = false;
+      }
 
-       }  
+      if (isGrounded() && doubleJump)
+      {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+        doubleJump = true;
+      }
 
         UpdateAnimationState();
     }
