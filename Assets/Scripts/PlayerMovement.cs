@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-     private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
     private bool doubleJump;
+    public float dashSpeed;
+
+    public float dashLength = .5f, dashCooldown = 1f;
+
+    private float dashCounter;
+    private float dashCoolCounter;
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
@@ -26,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
        coll = GetComponent<BoxCollider2D>();
        sprite = GetComponent<SpriteRenderer>();
        anim = GetComponent<Animator>();
+
+       
     }
 
     // Update is called once per frame
@@ -41,18 +49,29 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
       }  
       
-      if(isGrounded() && !Input.GetButtonDown("Jump"))
+      if (Input.GetKeyDown(KeyCode.Space))
       {
-        doubleJump = false;
+        if(dashCoolCounter <=0 && dashCoolCounter <=0)
+        {
+           moveSpeed = dashSpeed;
+           dashCounter = dashLength;
+        }
       }
 
-      if (isGrounded() && doubleJump)
+      if (dashCounter > 0)
       {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+         dashCounter -= Time.deltaTime;
 
-        doubleJump = true;
+         if (dashCounter <=0)
+         {
+           dashCoolCounter = dashCooldown;
+         }
       }
 
+      if (dashCoolCounter > 0)
+      {
+        dashCoolCounter -= Time.deltaTime;
+      }
         UpdateAnimationState();
     }
     private void UpdateAnimationState()
