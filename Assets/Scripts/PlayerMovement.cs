@@ -8,14 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
-    private bool doubleJump;
-    public float dashSpeed;
-
-    public float dashLength = .5f, dashCooldown = 1f;
-
-    private float dashCounter;
-    private float dashCoolCounter;
-
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+    
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask jumpableGround;
@@ -32,46 +30,50 @@ public class PlayerMovement : MonoBehaviour
        coll = GetComponent<BoxCollider2D>();
        sprite = GetComponent<SpriteRenderer>();
        anim = GetComponent<Animator>();
-
+    
        
     }
 
     // Update is called once per frame
     private void Update()
     {
+
+      
+
+      if(isDashing)
+      {
+        return;
+      }
+
       dirX = Input.GetAxisRaw("Horizontal");
 
        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+
 
       if(Input.GetButtonDown("Jump") && isGrounded())
       {
         jumpSound.Play();
         rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
       }  
+
+      if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+      {
+        StartCoroutine(Dash());
+      }
+       IEnumerator Dash()
+      {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+      }
       
-      if (Input.GetKeyDown(KeyCode.Space))
-      {
-        if(dashCoolCounter <=0 && dashCoolCounter <=0)
-        {
-           moveSpeed = dashSpeed;
-           dashCounter = dashLength;
-        }
-      }
-
-      if (dashCounter > 0)
-      {
-         dashCounter -= Time.deltaTime;
-
-         if (dashCounter <=0)
-         {
-           dashCoolCounter = dashCooldown;
-         }
-      }
-
-      if (dashCoolCounter > 0)
-      {
-        dashCoolCounter -= Time.deltaTime;
-      }
         UpdateAnimationState();
     }
     private void UpdateAnimationState()

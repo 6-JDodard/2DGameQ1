@@ -3126,6 +3126,18 @@ CompositeCollider2D:
         Y: -10000000
       - X: 500000000
         Y: -10000000
+    - - X: -80000000
+        Y: 20000000
+      - X: -100000000
+        Y: 20000000
+      - X: -100000000
+        Y: -30000000
+      - X: -160000000
+        Y: -30000000
+      - X: -160000000
+        Y: -60000000
+      - X: -80000000
+        Y: -60000000
     - - X: 320000000
         Y: 10000000
       - X: 300000000
@@ -3150,20 +3162,18 @@ CompositeCollider2D:
         Y: -50000000
       - X: 140000000
         Y: -50000000
-    - - X: -90000000
-        Y: -30000000
-      - X: -160000000
-        Y: -30000000
-      - X: -160000000
-        Y: -60000000
-      - X: -90000000
-        Y: -60000000
   m_CompositePaths:
     m_Paths:
     - - {x: 49.999973, y: -1}
       - {x: 49.999973, y: 2}
       - {x: 40, y: 1.9999708}
       - {x: 40.00003, y: -1}
+    - - {x: -8.00003, y: -6}
+      - {x: -8.00003, y: 2}
+      - {x: -10, y: 1.9999708}
+      - {x: -10.00003, y: -3}
+      - {x: -16, y: -3.0000293}
+      - {x: -15.999971, y: -6}
     - - {x: 31.999971, y: -4}
       - {x: 31.999971, y: 1}
       - {x: 30, y: 0.99997073}
@@ -3176,10 +3186,6 @@ CompositeCollider2D:
       - {x: 13.999971, y: -2}
       - {x: 6, y: -2.0000293}
       - {x: 6.000029, y: -5}
-    - - {x: -9.00003, y: -6}
-      - {x: -9.00003, y: -3}
-      - {x: -16, y: -3.0000293}
-      - {x: -15.999971, y: -6}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!50 &1328560448
@@ -3292,7 +3298,7 @@ GameObject:
   - component: {fileID: 1432600207}
   - component: {fileID: 1432600206}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: TileMaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3594,7 +3600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717619438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.82, y: -1.6, z: 0}
+  m_LocalPosition: {x: -14.82, y: -2.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3639,9 +3645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9eb6191aaf214940ae454cbb791d181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 12
-  dashLength: 1
-  dashCooldown: 1
   moveSpeed: 10
   jumpForce: 12
   jumpableGround:
