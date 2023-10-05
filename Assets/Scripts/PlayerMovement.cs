@@ -9,22 +9,18 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
 
-    private bool isWallSliding;
-    private float wallSlidingSpeed = 2f;
-
+    
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-    private float horizontal;
     
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
+    
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask jumpableGround;
-   
+    
     private float dirX = 0f;
 
     private enum MovementState { idle, running, jumping, falling }
@@ -45,28 +41,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-    horizontal = Input.GetAxisRaw("Horizontal");
-
-     bool IsWalled()
-      {
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-      }
-
-     void WallSlide()
-      {
-       if (IsWalled() && !isGrounded() && horizontal !=0f)
-      {
-         isWallSliding = true;
-         rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
-      } 
-      else
-      {
-        isWallSliding = false;
-      }
-    }
-
-      WallSlide();
-
       if(isDashing)
       {
         return;
