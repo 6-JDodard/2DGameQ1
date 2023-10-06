@@ -16,7 +16,12 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     
+    public Transform wallCheck;
+    bool isWallTouch;
+    bool isSliding;
+    public float wallSlidingSpeed;
     
+
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask jumpableGround;
@@ -56,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
         jumpSound.Play();
         rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
       }  
+      
+      isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.7f, 0.24f), 0, groundLayer);
+      isWallTouch = Physics2D.OverlapBox(wallCheck.position, new Vector2(1.7f,0.24f), 0, groundLayer);
 
       if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
       {
