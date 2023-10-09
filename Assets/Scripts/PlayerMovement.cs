@@ -16,18 +16,22 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     
-    public Transform wallCheck;
-    bool isWallTouch;
-    bool isSliding;
-    public float wallSlidingSpeed;
-    
+ 
+    //Wall Jump Variables
+    private bool OnWallRight;
+    private bool OnWallLeft;
+
+    Vector3 WallRayPositionLeft;
+    Vector3 WallRayPositionRight;
+
+    RaycastHit2D[] WallHitsLeft;
+    RaycastHit2D[] WallHitsRight;
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask jumpableGround;
     
     private float dirX = 0f;
-
     private enum MovementState { idle, running, jumping, falling }
 
     [SerializeField] private AudioSource jumpSound;
@@ -62,9 +66,20 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
       }  
       
-      isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.7f, 0.24f), 0, groundLayer);
-      isWallTouch = Physics2D.OverlapBox(wallCheck.position, new Vector2(1.7f,0.24f), 0, groundLayer);
+      //Wall Jump Ability
+      if (Input.GetKeyDown(KeyCode.Space) && OnWallLeft)
+      {
+        rb.velocity = new Vector2(jumpForce * 0.5f, jumpForce);
+        
+      }
+      else if (Input.GetKeyDown(KeyCode.Space) && OnWallRight)
+      {
+        rb.velocity = new Vector2(jumpForce * 0.5f, jumpForce);
+        
+      }
 
+    
+      //Dash Ability
       if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
       {
         StartCoroutine(Dash());
@@ -83,8 +98,10 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
       }
       
-        UpdateAnimationState();
+      UpdateAnimationState();
     }
+
+    //Animations
     private void UpdateAnimationState()
     {
       MovementState state;
