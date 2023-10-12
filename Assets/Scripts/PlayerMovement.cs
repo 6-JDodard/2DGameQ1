@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
-
+    float horizontal;
     
     private bool canDash = true;
     private bool isDashing;
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashingCooldown = 1f;
     
  
-    //Wall Jump Variables
+    // Wall Jump Variables
     [Header("Wall Jump System")]
     [SerializeField] private Transform wallCheck;
     [SerializeField] public float wallSlidingSpeed;
@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask jumpableGround;
-    [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private bool IsGrounded;
     
@@ -49,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
        coll = GetComponent<BoxCollider2D>();
        sprite = GetComponent<SpriteRenderer>();
        anim = GetComponent<Animator>();
+       
     
        
     }
@@ -59,11 +59,13 @@ public class PlayerMovement : MonoBehaviour
       isWallTouch = Physics2D.OverlapBox(wallCheck.position, new Vector2(0.9f, 1f), 0, groundLayer);
 
          if(isWallTouch && !isGrounded() && horizontal != 0)  
-        {
+        { 
+          Debug.Log("Slide");
             isSliding = true;
         }
         else
         {
+         
             isSliding = false;
         }
     
@@ -150,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
+
      private void OnTriggerEnter2D(Collider2D collision)
     {
         
@@ -157,9 +160,17 @@ public class PlayerMovement : MonoBehaviour
         {
             
             Destroy(collision.gameObject);
+        }
+
+        
+    }
+   private void OnCollisionEnter2D(Collision2D collision)
+   {
+        if(collision.gameObject.CompareTag("Wall"))
+        {
+            
+            rb.gravityScale = rb.gravityScale / 2;
         
         }
-    }
-
-   
+   }
 }
