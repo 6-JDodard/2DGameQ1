@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     
+   
  
     // Wall Jump Variables
     [Header("Wall Jump System")]
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     
 
     private float dirX = 0f;
-    private enum MovementState { idle, running, jumping, falling }
+    private enum MovementState { idle, running, jumping, falling,}
 
     [SerializeField] private AudioSource jumpSound;
 
@@ -145,6 +146,8 @@ public class PlayerMovement : MonoBehaviour
        {
          state = MovementState.falling;
        }
+
+     
 
       anim.SetInteger("state",(int)state);
    }
